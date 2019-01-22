@@ -39,7 +39,7 @@ export default {
 
 <style lang="scss">
 #app {
-    font-family: 'Avenir', Helvetica, Arial, sans-serif;
+    font-family: 'Noto Sans', sans-serif;
     color: #2c3e50;
     .site-title {
         @media (max-width: 767px) {
