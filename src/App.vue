@@ -3,14 +3,14 @@
         <div class="jumbotron jumbotron-fluid pb-0">
             <div class="container">
                 <div class="max-width-600 m-auto">
-                    <h1 class="display-4">QR codes tool</h1>
+                    <h1 class="display-4 site-title">QR codes tool</h1>
                     <p class="lead">This webpage help you to generate QR code with options and scan QR code</p>
                     <nav>
-                        <div class="nav nav-tabs flex-column flex-sm-row">
-                            <router-link active-class="active" :to="{ name: 'generate' }" class="nav-link">
+                        <div class="nav nav-tabs">
+                            <router-link :to="{ name: 'generate' }" class="nav-link">
                                 Generate
                             </router-link>
-                            <router-link active-class="active" :to="{ name: 'scan' }" class="nav-link">
+                            <router-link :to="{ name: 'scan' }" class="nav-link">
                                 Scan
                             </router-link>
                         </div>
@@ -30,13 +30,10 @@
 export default {
     name: 'app',
     data() {
-        return {
-        }
+        return {}
     },
-    methods: {
-    },
-    mounted() {
-    }
+    methods: {},
+    mounted() {}
 }
 </script>
 
@@ -44,6 +41,11 @@ export default {
 #app {
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
     color: #2c3e50;
+    .site-title {
+        @media (max-width: 767px) {
+            font-size: 40px;
+        }
+    }
     .max-width-600 {
         max-width: 600px;
     }
