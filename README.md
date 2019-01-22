@@ -1,5 +1,9 @@
 # qr-gen
 
+Dependencies:
+* use QRious (https://neocotic.com/qrious/)
+
+
 ## Project setup
 ```
 npm install
