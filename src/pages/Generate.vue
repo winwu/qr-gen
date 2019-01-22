@@ -1,41 +1,82 @@
 <template>
     <div>
-        <form @click.stop.prevent="generate" class="mb-4">
+        <form @click.stop.prevent="submit" class="mb-4">
             <div class="form-group">
                 <label for="InputUrl">URL</label>
-                <input v-model="qriousConfig.value" type="url" class="form-control" id="InputUrl" placeholder="https://winwu.github.io">
+                <input
+                    v-validate="'required|url:require_protocol'"
+                    v-model="qriousConfig.value"
+                    v-bind:class="{
+                        'is-invalid': errors.has('url')
+                    }"
+                    name="url" type="url" class="form-control" id="InputUrl" placeholder="https://winwu.github.io">
+                <div v-if="errors.has('url')" class="invalid-feedback">
+                    {{ errors.first('url') }}
+                </div>
             </div>
             <div class="form-row">
                 <div class="form-group col-6">
-                <label for="InputBackground">Background</label>
-                <input v-model="qriousConfig.background" type="text" class="form-control" id="InputBackground" placeholder="#000">
+                    <label for="InputBackground">Background</label>
+                    <input
+                        v-validate="'required'"
+                        v-model="qriousConfig.background"
+                        v-bind:class="{
+                            'is-invalid': errors.has('background')
+                        }"
+                        name="background"
+                        type="text" class="form-control" id="InputBackground" placeholder="#000">
+                    <div v-if="errors.has('background')" class="invalid-feedback">
+                        {{ errors.first('background') }}
+                    </div>
                 </div>
                 <div class="form-group col-6">
-                <label for="InputForeground">Foreground</label>
-                <input v-model="qriousConfig.foreground" type="text" class="form-control" id="InputForeground" placeholder="#000">
+                    <label for="InputForeground">Foreground</label>
+                    <input
+                        v-validate="'required'"
+                        v-model="qriousConfig.foreground"
+                        v-bind:class="{
+                            'is-invalid': errors.has('foreground')
+                        }"
+                        name="foreground" type="text" class="form-control" id="InputForeground" placeholder="#000">
+                     <div v-if="errors.has('foreground')" class="invalid-feedback">
+                        {{ errors.first('foreground') }}
+                    </div>
                 </div>
             </div>
             <div class="form-row">
                 <div class="form-group col-6">
-                <label for="InputSize">Size</label>
-                <input v-model="qriousConfig.size" type="text" class="form-control" id="InputSize" placeholder="100" min="50" max="500">
-                <small class="form-text text-muted">result size*size</small>
+                    <label for="InputSize">Size</label>
+                    <input
+                        v-validate="'required|min_value:50|max_value:500'"
+                        v-model="qriousConfig.size"
+                        v-bind:class="{
+                            'is-invalid': errors.has('size')
+                        }"
+                        name="size" type="text" class="form-control" id="InputSize" placeholder="100">
+                    <small class="form-text text-muted">result size*size</small>
+                    <div v-if="errors.has('size')" class="invalid-feedback">
+                        {{ errors.first('size') }}
+                    </div>
                 </div>
                 <div class="form-group col-6">
-                <label for="selectPadding">Padding</label>
-                <select v-model="qriousConfig.padding"  name="padding" id="selectPadding" class="form-control">
-                    <option value="">default</option>
-                    <option v-for="n in 100" :value="n" :key="n">{{ n }}</option>
-                </select>
-                <small class="form-text text-muted">Padding for the QR code (pixels)</small>
+                    <label for="selectPadding">Padding</label>
+                    <select v-model="qriousConfig.padding"  name="padding" id="selectPadding" class="form-control">
+                        <option value="">default</option>
+                        <option v-for="n in 100" :value="n" :key="n">{{ n }}</option>
+                    </select>
+                    <small class="form-text text-muted">Padding for the QR code (pixels)</small>
                 </div>
             </div>
             <button type="submit" class="btn btn-primary btn-block">Generate</button>
-            <template v-if="qrResult && typeof qrResult.toDataURL === 'function'">
-                <a @click="downloadImage($event)" class="text-primary download-link mt-2 mb-2 d-inline-block" :download="downloadFileName">Download</a>
-            </template>
         </form>
-        <canvas id="qr"></canvas>
+        <template v-if="hasError === false">
+            <template v-if="qrResult && typeof qrResult.toDataURL === 'function'">
+                <div>
+                    <a @click="downloadImage($event)" class="text-primary download-link mt-2 mb-2 d-inline-block">Download</a>
+                </div>
+            </template>
+        </template>
+        <canvas v-show="hasError === false" id="qr"></canvas>
     </div>
 </template>
 
@@ -45,6 +86,7 @@ export default {
     name: 'generate-tab',
     data() {
         return {
+            hasError: false,
             qrResult: null,
             $qr: null,
             qriousConfig: {
@@ -53,21 +95,36 @@ export default {
                 padding: '',
                 size: 100,
                 level: 'L',
-                value: 'https://winwu.github.io'
+                value: ''
             }
         }
     },
     computed: {
-        downloadFileName() {
+        /*downloadFileName() {
             if (this.qriousConfig.value) {
                 // https://winwu.github.io to winwu_github_io
-                return new URL(this.qriousConfig.value).hostname.split('.').join('_');
+                this.$validator.validate().then(result => {
+                    if (result) {
+                        return new URL(this.qriousConfig.value).hostname.split('.').join('_');
+                    } else {
+                        return '';
+                    }
+                });
             } else {
                 return 'no_name';
             }
-        }
+        }*/
     },
     methods: {
+        async submit() {
+            const isValid = await this.$validator.validateAll();
+            if (isValid) {
+                this.hasError = false;
+                this.generate();
+            } else {
+                this.hasError = true;
+            }
+        },
         generate() {
             this.qrResult = new QRious({
                 element: this.$qr,
@@ -87,7 +144,6 @@ export default {
     },
     mounted() {
         this.$qr = document.getElementById('qr');
-        this.generate();
     }
 }
 </script>

@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import { QrcodeStream, QrcodeCapture } from 'vue-qrcode-reader'
+import { QrcodeStream } from 'vue-qrcode-reader'
 export default {
     name: 'scan-tab',
     data() {
@@ -20,7 +20,7 @@ export default {
     },
     components: {
         QrcodeStream,
-        QrcodeCapture
+        // QrcodeCapture
     },
     computed: {
     },
