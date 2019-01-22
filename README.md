@@ -1,7 +1,8 @@
 # qr-gen
 
 Dependencies:
-* use QRious (https://neocotic.com/qrious/)
+* Generate function use QRious (https://neocotic.com/qrious/)
+* Scan function vue-qrcode-reader (https://github.com/gruhn/vue-qrcode-reader)
 
 
 ## Project setup
