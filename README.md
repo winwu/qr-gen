@@ -36,6 +36,8 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 ## Note
 
+deploy to gh-pages
+
 ```
-git subtree push --prefix dist origin gh-pages
+ bash deploy.sh
 ```
