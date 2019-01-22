@@ -44,53 +44,53 @@
 <script>
 import QRious from 'qrious';
 export default {
-  name: 'generate-tab',
-  data() {
-    return {
-      qrResult: null,
-      $qr: null,
-      qriousConfig: {
-        background: 'transparent',
-        foreground: 'black',
-        padding: '',
-        size: 100,
-        level: 'L',
-        value: 'https://winwu.github.io'
-      }
-    }
-  },
-  computed: {
-    downloadFileName() {
-      if (this.qriousConfig.value) {
-        // https://winwu.github.io to winwu_github_io
-        return new URL(this.qriousConfig.value).hostname.split('.').join('_');
-      } else {
-        return 'no_name';
-      }
-    }
-  },
-  methods: {
-    generate() {
-      this.qrResult = new QRious({
-        element: this.$qr,
-        ...this.qriousConfig
-      });
-      console.warn('config', {
-        element: this.$qr,
-        ...this.qriousConfig
-      });
-    },
-    downloadImage(e) {
-      if (event.target) {
-        var image = this.qrResult.toDataURL('image/png').replace(/^data:image\/[^;]+/, 'data:application/octet-stream');
-        window.open(image);
-      }
-    }
-  },
-  mounted() {
-    this.$qr = document.getElementById('qr');
-    this.generate();
-  }
+	name: 'generate-tab',
+	data() {
+		return {
+			qrResult: null,
+			$qr: null,
+			qriousConfig: {
+				background: 'transparent',
+				foreground: 'black',
+				padding: '',
+				size: 100,
+				level: 'L',
+				value: 'https://winwu.github.io'
+			}
+		}
+	},
+	computed: {
+		downloadFileName() {
+			if (this.qriousConfig.value) {
+				// https://winwu.github.io to winwu_github_io
+				return new URL(this.qriousConfig.value).hostname.split('.').join('_');
+			} else {
+				return 'no_name';
+			}
+		}
+	},
+	methods: {
+		generate() {
+			this.qrResult = new QRious({
+				element: this.$qr,
+				...this.qriousConfig
+			});
+			console.warn('config', {
+				element: this.$qr,
+				...this.qriousConfig
+			});
+		},
+		downloadImage(e) {
+			if (event.target) {
+				var image = this.qrResult.toDataURL('image/png').replace(/^data:image\/[^;]+/, 'data:application/octet-stream');
+				window.open(image);
+			}
+		}
+	},
+	mounted() {
+		this.$qr = document.getElementById('qr');
+		this.generate();
+	}
 }
 </script>
 
