@@ -52,5 +52,8 @@ export default {
     .download-link {
         cursor: pointer;
     }
+    .result-url {
+        word-break: break-all;
+    }
 }
 </style>
