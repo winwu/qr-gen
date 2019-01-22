@@ -83,7 +83,7 @@
 <script>
 import QRious from 'qrious'
 export default {
-    name: 'generate-tab',
+    name: 'generate-page',
     data() {
         return {
             hasError: false,
