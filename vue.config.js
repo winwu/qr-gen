@@ -1,3 +1,3 @@
 module.exports = {
-    publicPath: './'
+    publicPath: 'https://winwu.github.io/qr-gen'
 }

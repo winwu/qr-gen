@@ -40,3 +40,11 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 ## Note
 
 git subtree push --prefix dist origin gh-pages
+
+```
+git run build
+git branch gh-pages
+git checkout gh-pages
+git add -f dist
+$ git subtree push --prefix dist origin gh-pages
+```
