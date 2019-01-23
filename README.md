@@ -1,8 +1,11 @@
-# qr-gen
+# QR codes tool
 
-Dependencies:
+This webpage has two main function, one is to generate QR code with options, another on is to scan the QR code.
+
+i use these dependencies:
 * Generate function use QRious (https://neocotic.com/qrious/)
 * Scan function vue-qrcode-reader (https://github.com/gruhn/vue-qrcode-reader)
+
 
 
 ## Project setup
