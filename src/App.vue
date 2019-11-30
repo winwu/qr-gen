@@ -5,6 +5,9 @@
                 <div class="max-width-600 m-auto">
                     <h1 class="display-4 site-title">QR codes tool</h1>
                     <p class="lead">This webpage help you to generate QR code with options and scan QR code</p>
+                    <div class="text-right">
+                        <a class="github-button" href="https://github.com/winwu/qr-gen/issues" aria-label="Issue winwu/qr-gen on GitHub">Issue</a>
+                    </div>
                     <nav>
                         <div class="nav nav-tabs">
                             <router-link :to="{ name: 'generate' }" class="nav-link">

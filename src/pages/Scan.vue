@@ -1,7 +1,7 @@
 <template>
     <div class="mb-4">
         <div v-if="error" class="alert alert-warning" role="alert">
-            <b>Error</b> {{ error }}
+            <b>Error</b> &nbsp;<span v-html="error"></span>
         </div>
         <div v-if="result" class="alert alert-success" role="alert">
             Go to <a @click.stop="leave" :href="result" target="_blank" class="alert-link" rel="noopener">{{ result }}</a>
@@ -51,17 +51,17 @@ export default {
                 await promise
             } catch (error) {
                 if (error.name === 'NotAllowedError') {
-                this.error = "you need to grant camera access permisson"
+                    this.error = "you need to grant camera access permisson, <a href='https://support.google.com/chrome/answer/2693767'>See more.</a>"
                 } else if (error.name === 'NotFoundError') {
-                this.error = "no camera on this device"
+                    this.error = "no camera on this device"
                 } else if (error.name === 'NotSupportedError') {
-                this.error = "secure context required (HTTPS, localhost)"
+                    this.error = "secure context required (HTTPS, localhost)"
                 } else if (error.name === 'NotReadableError') {
-                this.error = "is the camera already in use?"
+                    this.error = "is the camera already in use?"
                 } else if (error.name === 'OverconstrainedError') {
-                this.error = "installed cameras are not suitable"
+                    this.error = "installed cameras are not suitable"
                 } else if (error.name === 'StreamApiNotSupportedError') {
-                this.error = "Stream API is not supported in this browser"
+                    this.error = "Stream API is not supported in this browser"
                 }
             }
         },
