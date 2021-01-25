@@ -13,6 +13,8 @@ i use these dependencies:
 npm install
 ```
 
+and edit vue.config.js, change publicPath to  'http://localhost:8080/'
+
 ### Compiles and hot-reloads for development
 ```
 npm run serve
