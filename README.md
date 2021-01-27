@@ -42,12 +42,10 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 ## Note
 
-git subtree push --prefix dist origin gh-pages
+update gh-pages
 
-```
-git run build
-git branch gh-pages
-git checkout gh-pages
-git add -f dist
-$ git subtree push --prefix dist origin gh-pages
-```
+1. npm run build
+2. git co gh-pages
+3. rm -rf css/ js/ index.html
+4. mv ./dist/* ./
+5. git add and commit
