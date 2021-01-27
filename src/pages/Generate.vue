@@ -17,30 +17,11 @@
             <div class="form-row">
                 <div class="form-group col-6">
                     <label for="InputBackground">Background</label>
-                    <input
-                        v-validate="'required'"
-                        v-model="qriousConfig.background"
-                        v-bind:class="{
-                            'is-invalid': errors.has('background')
-                        }"
-                        name="background"
-                        type="text" class="form-control" id="InputBackground" placeholder="#000">
-                    <div v-if="errors.has('background')" class="invalid-feedback">
-                        {{ errors.first('background') }}
-                    </div>
+                    <chrome-picker class="w-100" :value="qriousConfig.background" :disableAlpha="true" @input="updateColorValue($event, 'background')"></chrome-picker>
                 </div>
                 <div class="form-group col-6">
                     <label for="InputForeground">Foreground</label>
-                    <input
-                        v-validate="'required'"
-                        v-model="qriousConfig.foreground"
-                        v-bind:class="{
-                            'is-invalid': errors.has('foreground')
-                        }"
-                        name="foreground" type="text" class="form-control" id="InputForeground" placeholder="#000">
-                     <div v-if="errors.has('foreground')" class="invalid-feedback">
-                        {{ errors.first('foreground') }}
-                    </div>
+                    <chrome-picker class="w-100" :value="qriousConfig.foreground" :disableAlpha="true" @input="updateColorValue($event, 'foreground')"></chrome-picker>
                 </div>
             </div>
             <div class="form-row">
@@ -76,12 +57,14 @@
                 </div>
             </template>
         </template>
-        <canvas v-show="hasError === false" id="qr"></canvas>
+        <canvas v-show="qriousConfig.value && hasError === false" id="qr"></canvas>
     </div>
 </template>
 
 <script>
-import QRious from 'qrious'
+import QRious from 'qrious';
+import { Chrome } from 'vue-color';
+
 export default {
     name: 'generate-page',
     data() {
@@ -90,8 +73,8 @@ export default {
             qrResult: null,
             $qr: null,
             qriousConfig: {
-                background: 'transparent',
-                foreground: 'black',
+                background: '#ffffff',
+                foreground: '#333333',
                 padding: '',
                 size: 100,
                 level: 'L',
@@ -99,7 +82,18 @@ export default {
             }
         }
     },
+    components: {
+        'chrome-picker': Chrome
+    },
     computed: {
+        bgc () {
+            console.log(this.qriousConfig.background);
+            return this.qriousConfig.background;
+        },
+        fgc () {
+            console.log(this.qriousConfig.foreground);
+            return this.qriousConfig.foreground;
+        },
         /*downloadFileName() {
             if (this.qriousConfig.value) {
                 // https://winwu.github.io to winwu_github_io
@@ -140,7 +134,13 @@ export default {
                 var image = this.qrResult.toDataURL('image/png').replace(/^data:image\/[^;]+/, 'data:application/octet-stream');
                 window.open(image);
             }
+        },
+        updateColorValue($event, whichColor) {
+            // console.log('$event', $event);
+            // console.log('set which', whichColor);
+            this.$set(this.qriousConfig, whichColor, $event.hex)
         }
+        
     },
     mounted() {
         this.$qr = document.getElementById('qr');

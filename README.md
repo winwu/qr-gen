@@ -2,18 +2,19 @@
 
 This webpage has two main function, one is to generate QR code with options, another on is to scan the QR code.
 
-i use these dependencies:
+Use these dependencies:
 * Generate function use QRious (https://neocotic.com/qrious/)
 * Scan function vue-qrcode-reader (https://github.com/gruhn/vue-qrcode-reader)
-
+* vue-color (https://github.com/xiaokaike/vue-color)
 
 
 ## Project setup
+
 ```
 npm install
 ```
 
-and edit vue.config.js, change publicPath to  'http://localhost:8080/'
+and please edit vue.config.js, change publicPath to  'http://localhost:8080/'
 
 ### Compiles and hot-reloads for development
 ```
